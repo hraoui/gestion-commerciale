@@ -181,7 +181,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -210,6 +210,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        Intervention\Image\ImageServiceProvider::class,
     ])->toArray(),
 
 ];
