@@ -11,7 +11,9 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
-        "unisharp/laravel-filemanager": "^2.5"
+        "unisharp/laravel-filemanager": "^2.5",
+        "ext-gd": "*"
+
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
