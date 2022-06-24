@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use \Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class ProductController extends Controller
 {
@@ -27,7 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+         $categories = Category::all();
 
         return view('inventory.products.create', compact('categories'));
     }
@@ -60,11 +64,11 @@ class ProductController extends Controller
         $product->stock = $request->stock;
         $product->price = $request->price;
         $product->photo = $request->photo;
-
+        $qrcode = QrCode::size(100)->generate($product->name);
         $product->save();
 
 
-        return view('inventory.products', compact('qrcode'));
+        return view('inventory.products',compact('qrcode'));
     }
 
     /**
@@ -75,7 +79,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('inventory.products.show', ['product' => $product]);
+        return view('inventory.products.show',['product'=>$product]);
     }
 
     /**
@@ -88,7 +92,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::all();
-        return view('inventory.products.edit', compact('product', 'categories'));
+    return view('inventory.products.edit',compact('product','categories'));
     }
 
     /**
@@ -122,10 +126,27 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+       $product = Product::findOrFail($id);
+       $product->delete();
         return redirect('/products');;
     }
+
+
+    public function generate($id)
+
+    {
+        $product = Product::findOrFail($id);
+
+
+
+        $product = Product::findOrFail($id);
+        $qrcode = QrCode::size(100)->generate($product->name,'../public/images/qrcode.svg');
+        return view('inventory.products.qrcode', compact('qrcode'));
+
+
+    }
+
+
 
 
 
