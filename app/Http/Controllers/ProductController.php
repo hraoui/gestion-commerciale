@@ -7,7 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use \Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 
 class ProductController extends Controller
@@ -64,7 +64,7 @@ class ProductController extends Controller
         $product->stock = $request->stock;
         $product->price = $request->price;
         $product->photo = $request->photo;
-        $qrcode = QrCode::size(100)->generate($product->name);
+
         $product->save();
 
 
@@ -132,19 +132,6 @@ class ProductController extends Controller
     }
 
 
-    public function generate($id)
-
-    {
-        $product = Product::findOrFail($id);
-
-
-
-        $product = Product::findOrFail($id);
-        $qrcode = QrCode::size(100)->generate($product->name,'../public/images/qrcode.svg');
-        return view('inventory.products.qrcode', compact('qrcode'));
-
-
-    }
 
 
 
